@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics Study Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ffb6b9, #ffcccb); /* Soft pastel gradient */
+            transition: background 0.5s ease;
+            font-size: 18px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #ffffff; /* Light white background */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #333333; /* Dark text color for title */
+        }
+
+        .routine-box,
+        .quote-box,
+        .progress-box,
+        .clock-box,
+        .badge-box {
+            background: #e3b8b0; /* Light pastel pink background */
+            padding: 25px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333; /* Dark text for better readability */
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        input,
+        select {
+            width: 85%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #ff8080; /* Soft red border */
+            border-radius: 6px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            padding: 15px 20px;
+            cursor: pointer;
+            background: #ff8080; /* Soft red button */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff6666; /* Darker red for hover */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #ffd9d9; /* Light pink background for tasks */
+            margin: 15px 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #7bed9f; /* Green for completed tasks */
+            background: #d4f7d4; /* Light green background for completed tasks */
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #7bed9f; /* Green progress bar */
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .badge-box {
+            text-align: left;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ffb6b9; /* Pastel pink badge background */
+            color: black;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .dark-mode {
+            background: linear-gradient(to right, #404040, #2c3e50); /* Dark gradient for dark mode */
+            color: white;
+        }
+
+        .dark-mode .container {
+            background: #34495e;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .dark-mode .routine-box,
+        .dark-mode .quote-box,
+        .dark-mode .progress-box,
+        .dark-mode .clock-box,
+        .dark-mode .badge-box {
+            background: #2ecc71; /* Light green for dark mode */
+            color: white;
+        }
+
+        .dark-mode input,
+        .dark-mode select {
+            background-color: #34495e;
+            color: white;
+            border: 2px solid #16a085; /* Teal input border */
+        }
+
+        .dark-mode button {
+            background: #16a085; /* Teal button for dark mode */
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .dark-mode button:hover {
+            background: #1abc9c; /* Lighter teal for hover */
+        }
+
+        .dark-mode button:active {
+            background: #16a085; /* Same as original for active state */
+        }
+
+        .dark-mode .badge {
+            background: #ffb6b9; /* Pastel pink badge for dark mode */
+            color: black;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* Change bullet color for Weekly Routine */
+        .routine-box p::before {
+            content: '✔️'; /* Green check mark emoji as the bullet */
+            color: #2ecc71; /* Green color for bullets */
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>📊 Data Analytics Study Tracker 📚</h2>
+        <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+        <div class="clock-box" id="clock"></div>
+        <div class="quote-box">"🚀 Trust the process. Your hard work will pay off! 💡"</div>
+        <div class="routine-box">
+            <h3>📅 Weekly Study Routine</h3>
+            <p>Monday - Excel 📊</p>
+            <p>Tuesday - SQL 💾</p>
+            <p>Wednesday - Python 🐍</p>
+            <p>Thursday - Statistics & Math 📈</p>
+            <p>Friday - Power BI 📊</p>
+            <p>Saturday - English & Communication 📝</p>
+            <p>Sunday - Project Work 🚀</p>
+        </div>
+        <div class="progress-box">
+            <h3>📈 Progress Tracker</h3>
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+        </div>
+        <select id="dayDropdown" onchange="setRoutine()">
+            <option value="Excel">Excel 📊</option>
+            <option value="SQL">SQL 💾</option>
+            <option value="Python">Python 🐍</option>
+            <option value="Statistics & Math">Statistics & Math 📈</option>
+            <option value="Power BI">Power BI 📊</option>
+            <option value="English">English & Communication 📝</option>
+            <option value="Project Work">Project Work 🚀</option>
+        </select>
+        <input type="text" id="taskInput" placeholder="Add a new task...">
+        <input type="date" id="taskDate">
+        <input type="time" id="taskTime">
+        <button onclick="addTask()">➕ Add Task</button>
+        <ul id="taskList"></ul>
+        <div class="badge-box">
+            <h3>🏆 Achievement Badges</h3>
+            <div id="badges"></div>
+        </div>
+    </div>
+
+    <script>
+        // Enhance with better handling and efficiency
+        document.addEventListener("DOMContentLoaded", () => {
+            loadTasks();
+            updateClock();
+            setInterval(updateClock, 1000);
+            requestNotificationPermission();
+        });
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById("clock").innerText = `🕒 ${now.toLocaleTimeString()} - 📆 ${now.toDateString()}`;
+        }
+
+        function setRoutine() {
+            let day = document.getElementById("dayDropdown").value;
+            let taskInput = document.getElementById("taskInput");
+            taskInput.value = day || "";
+        }
+
+        function addTask() {
+            let taskInput = document.getElementById("taskInput").value.trim();
+            let taskDate = document.getElementById("taskDate").value;
+            let taskTime = document.getElementById("taskTime").value;
+            if (taskInput === "") return;
+
+            let li = document.createElement("li");
+            li.innerHTML = `${taskInput} 🗓️ ${taskDate} ⏰ ${taskTime} <button onclick="completeTask(this)">✅</button> <button onclick="deleteTask(this)">❌</button>`;
+            document.getElementById("taskList").appendChild(li);
+            saveTasks();
+            updateProgress();
+            scheduleNotification(taskInput, taskDate, taskTime);
+        }
+
+        function completeTask(button) {
+            button.parentElement.classList.toggle("completed");
+            saveTasks();
+            updateProgress();
+            awardBadge();
+        }
+
+        function deleteTask(button) {
+            button.parentElement.remove();
+            saveTasks();
+            updateProgress();
+        }
+
+        function saveTasks() {
+            let tasks = [];
+            document.querySelectorAll("#taskList li").forEach(li => {
+                tasks.push({ text: li.innerHTML, completed: li.classList.contains("completed") });
+            });
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.forEach(task => {
+                let li = document.createElement("li");
+                li.innerHTML = task.text;
+                if (task.completed) li.classList.add("completed");
+                document.getElementById("taskList").appendChild(li);
+            });
+            updateProgress();
+        }
+
+        function updateProgress() {
+            let tasks = document.querySelectorAll("#taskList li");
+            let completedTasks = document.querySelectorAll("#taskList li.completed").length;
+            let progress = tasks.length ? (completedTasks / tasks.length) * 100 : 0;
+            document.getElementById("progress").style.width = progress + "%";
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        function requestNotificationPermission() {
+            if ("Notification" in window) {
+                Notification.requestPermission().then(permission => {
+                    console.log("Notification permission:", permission);
+                });
+            }
+        }
+
+        function scheduleNotification(task, date, time) {
+            let taskDateTime = new Date(`${date}T${time}`);
+            let now = new Date();
+            let delay = taskDateTime - now;
+            if (delay > 0) {
+                setTimeout(() => {
+                    if (Notification.permission === "granted") {
+                        new Notification("📌 Task Reminder", { body: `Don't forget: ${task}!` });
+                    }
+                }, delay);
+            }
+        }
+
+        function awardBadge() {
+            let completed = document.querySelectorAll("#taskList li.completed").length;
+            if (completed === 5) document.getElementById("badges").innerHTML += `<span class="badge">🌟 SQL Master</span>`;
+            if (completed === 10) document.getElementById("badges").innerHTML += `<span class="badge">🐍 Python Pro</span>`;
+        }
+    </script>
+</body>
+
+</html>
